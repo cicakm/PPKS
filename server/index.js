@@ -1,11 +1,13 @@
-const express = require("express");
+import { getAllUsers }from "./db.js";
+
+import express from "express";
 const app = express();
-const cors = require("cors");
+import cors from "cors";
 
 app.use(cors());
 
-app.get("/", (req, res) => {
-  res.send("Hello from server!");
+app.get("/", async (req, res) => {
+  res.send(await getAllUsers());
 });
 
 app.listen(8080, () => {
