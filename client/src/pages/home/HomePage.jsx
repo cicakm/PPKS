@@ -1,42 +1,8 @@
-import React from "react";
-import {
-  Navbar,
-  Nav,
-  Container,
-  Row,
-  Col,
-  Button,
-  Card,
-} from "react-bootstrap";
+import { Container, Row, Col, Card } from "react-bootstrap";
 
 const HomePage = () => {
   return (
     <>
-      <Navbar bg="light" expand="lg" className="shadow-sm">
-        <Container>
-          <Navbar.Brand href="/">ChatApp</Navbar.Brand>
-          <Navbar.Toggle aria-controls="main-navbar" />
-          <Navbar.Collapse id="main-navbar" className="justify-content-end">
-            <Nav>
-              <Button
-                variant="outline-primary"
-                className="me-2 rounded-pill fw-semibold px-4"
-                href="/login"
-              >
-                Login
-              </Button>
-              <Button
-                variant="outline-primary"
-                className="rounded-pill fw-semibold px-4"
-                href="/register"
-              >
-                Register
-              </Button>
-            </Nav>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
-
       <Container>
         <Row className="justify-content-center">
           <Col md={7} lg={5}>
