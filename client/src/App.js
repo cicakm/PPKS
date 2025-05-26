@@ -1,20 +1,16 @@
 import "./App.css";
-import axios from "axios";
+// import axios from "axios";
+import HomePage from "./pages/home/HomePage";
+import "bootstrap/dist/css/bootstrap.min.css";
 
-function apiCall() {
-  axios.get("http://localhost:8080").then((data) => {
-    console.log(data.data);
-  });
-}
+// function apiCall() {
+//   axios.get("http://localhost:8080").then((data) => {
+//     console.log(data.data);
+//   });
+// }
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <button onClick={apiCall}>Make API call</button>
-      </header>
-    </div>
-  );
+  return <HomePage />;
 }
 
 export default App;

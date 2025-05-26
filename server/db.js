@@ -16,3 +16,12 @@ export async function getAllUsers() {
     console.log(error);
   }
 }
+
+export async function getUser(username) {
+  try {
+    const result = await pool.query("select username, password from myuser where username = $1", [username])
+    return result.rows[0];
+  } catch (error) {
+    console.log(error)
+  }
+}
