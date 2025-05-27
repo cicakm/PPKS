@@ -10,9 +10,11 @@ import {
   Alert,
 } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
@@ -47,8 +49,7 @@ const RegisterPage = () => {
           password,
           repeatPassword,
         });
-        localStorage.setItem("username", response.data.username);
-        localStorage.setItem("name", response.data.name);
+        login(response.data.username, response.data.name);
         navigate("/");
       } catch (error) {
         setRegisterFail(error.response.data);
