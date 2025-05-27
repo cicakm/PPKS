@@ -38,7 +38,8 @@ const LoginPage = () => {
           username: username,
           password: password,
         });
-        localStorage.setItem("user", response.data.username);
+        localStorage.setItem("username", response.data.username);
+        localStorage.setItem("name", response.data.name);
         navigate("/");
       } catch (error) {
         setLoginFail(error.response.data);
