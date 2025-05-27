@@ -8,20 +8,25 @@ const pool = new Pool({
   port: 5432,
 });
 
-export async function getAllUsers() {
+export async function createUser(name, username, password) {
   try {
-    const result = await pool.query("select * from myuser;");
-    return result.rows;
+    await pool.query(
+      "insert into myuser (name, username, password) values ($1, $2, $3);",
+      [name, username, password]
+    );
   } catch (error) {
     console.log(error);
   }
 }
 
-export async function getUser(username) {
+export async function getUserByUsername(username) {
   try {
-    const result = await pool.query("select username, password from myuser where username = $1", [username])
+    const result = await pool.query(
+      "select username, password from myuser where username = $1;",
+      [username]
+    );
     return result.rows[0];
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 }
