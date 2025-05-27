@@ -1,5 +1,14 @@
+import axios from "axios";
 import { useState } from "react";
-import { Container, Row, Col, Card, Form, Button } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Card,
+  Form,
+  Button,
+  Alert,
+} from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 const RegisterPage = () => {
@@ -10,9 +19,11 @@ const RegisterPage = () => {
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
   const [errors, setErrors] = useState({});
+  const [registerFail, setRegisterFail] = useState("");
 
   const validateForm = () => {
     const newErrors = {};
+    if (!name) newErrors.name = "Name is required!";
     if (!username) newErrors.username = "Username is required";
     if (!password) newErrors.password = "Password is required";
     else if (password.length < 6)
@@ -22,15 +33,26 @@ const RegisterPage = () => {
     return newErrors;
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const formErrors = validateForm();
     if (Object.keys(formErrors).length > 0) {
       setErrors(formErrors);
     } else {
       setErrors({});
-      // submit to backend...
-      navigate("/");
+      try {
+        const response = await axios.post("http://localhost:8080/register", {
+          name,
+          username,
+          password,
+          repeatPassword,
+        });
+        localStorage.setItem("username", response.data.username);
+        localStorage.setItem("name", response.data.name);
+        navigate("/");
+      } catch (error) {
+        setRegisterFail(error.response.data);
+      }
     }
   };
 
@@ -41,6 +63,11 @@ const RegisterPage = () => {
           <Card className="shadow-sm border-0 rounded-4">
             <Card.Body className="p-5">
               <h2 className="mb-4 fw-bold text-center display-6">Register</h2>
+              {registerFail && (
+                <Alert variant="danger" className="text-center">
+                  {registerFail}
+                </Alert>
+              )}
               <Form onSubmit={handleSubmit} noValidate>
                 <Form.Group className="mb-3" controlId="formName">
                   <Form.Label>Name</Form.Label>
