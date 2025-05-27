@@ -1,17 +1,10 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
-// import axios from "axios";
 import HomePage from "./pages/home/HomePage";
 import LoginPage from "./pages/login/LoginPage";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Navbar, Nav, Container, Button } from "react-bootstrap";
 import RegisterPage from "./pages/register/RegisterPage";
-
-// function apiCall() {
-//   axios.get("http://localhost:8080").then((data) => {
-//     console.log(data.data);
-//   });
-// }
 
 function App() {
   return (
