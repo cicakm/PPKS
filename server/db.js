@@ -22,7 +22,7 @@ export async function createUser(name, username, password) {
 export async function getUserByUsername(username) {
   try {
     const result = await pool.query(
-      "select username, password from myuser where username = $1;",
+      "select name, username, password from myuser where username = $1;",
       [username]
     );
     return result.rows[0];
