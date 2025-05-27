@@ -1,6 +1,15 @@
 import { useState } from "react";
-import { Container, Row, Col, Card, Form, Button } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Card,
+  Form,
+  Button,
+  Alert,
+} from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -8,25 +17,32 @@ const LoginPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
+  const [loginFail, setLoginFail] = useState("");
 
   const validateForm = () => {
     const newErrors = {};
     if (!username) newErrors.username = "Username is required";
     if (!password) newErrors.password = "Password is required";
-    else if (password.length < 6)
-      newErrors.password = "Password must be at least 6 characters";
     return newErrors;
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const formErrors = validateForm();
     if (Object.keys(formErrors).length > 0) {
       setErrors(formErrors);
     } else {
       setErrors({});
-      // submit to backend...
-      navigate("/");
+      try {
+        const response = await axios.post("http://localhost:8080/login", {
+          username: username,
+          password: password,
+        });
+        localStorage.setItem("user", response.data.username);
+        navigate("/");
+      } catch (error) {
+        setLoginFail(error.response.data);
+      }
     }
   };
 
@@ -37,6 +53,11 @@ const LoginPage = () => {
           <Card className="shadow-sm border-0 rounded-4">
             <Card.Body className="p-5">
               <h2 className="mb-4 fw-bold text-center display-6">Login</h2>
+              {loginFail && (
+                <Alert variant="danger" className="text-center">
+                  {loginFail}
+                </Alert>
+              )}
               <Form onSubmit={handleSubmit} noValidate>
                 <Form.Group className="mb-3" controlId="formUsername">
                   <Form.Label>Username</Form.Label>
