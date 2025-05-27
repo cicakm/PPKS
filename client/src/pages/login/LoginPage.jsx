@@ -10,9 +10,11 @@ import {
 } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useAuth } from "../../context/AuthContext";
 
 const LoginPage = () => {
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -38,8 +40,7 @@ const LoginPage = () => {
           username: username,
           password: password,
         });
-        localStorage.setItem("username", response.data.username);
-        localStorage.setItem("name", response.data.name);
+        login(response.data.username, response.data.name);
         navigate("/");
       } catch (error) {
         setLoginFail(error.response.data);
