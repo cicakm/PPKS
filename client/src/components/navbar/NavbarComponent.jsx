@@ -12,15 +12,18 @@ const NavbarComponent = () => {
           <Navbar.Toggle aria-controls="main-navbar" />
           <Navbar.Collapse id="main-navbar" className="justify-content-end">
             {username ? (
-              <Nav>
-                <Button
-                  variant="outline-primary"
-                  className="rounded-pill fw-semibold px-4"
-                  onClick={logout}
-                >
-                  Logout
-                </Button>
-              </Nav>
+              <>
+                <Navbar.Brand>{localStorage.getItem("name")}</Navbar.Brand>
+                <Nav>
+                  <Button
+                    variant="outline-primary"
+                    className="rounded-pill fw-semibold px-4"
+                    onClick={logout}
+                  >
+                    Logout
+                  </Button>
+                </Nav>
+              </>
             ) : (
               <Nav>
                 <Button
