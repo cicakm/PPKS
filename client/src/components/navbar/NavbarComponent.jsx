@@ -13,7 +13,16 @@ const NavbarComponent = () => {
           <Navbar.Collapse id="main-navbar" className="justify-content-end">
             {username ? (
               <>
-                <Navbar.Brand>{localStorage.getItem("name")}</Navbar.Brand>
+                <Navbar.Brand>{localStorage.getItem("username")}</Navbar.Brand>
+                <Nav>
+                  <Button
+                    variant="outline-primary"
+                    className="rounded-pill fw-semibold px-4"
+                    href="/chat"
+                  >
+                    Chat
+                  </Button>
+                </Nav>
                 <Nav>
                   <Button
                     variant="outline-primary"
