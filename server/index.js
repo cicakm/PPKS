@@ -1,11 +1,20 @@
 import { createUser, getUserByUsername } from "./db.js";
 import express from "express";
 import cors from "cors";
+import { createServer } from "http";
+import { Server } from "socket.io";
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+
+const server = createServer(app);
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:3000",
+  },
+});
 
 app.post("/register", async (req, res) => {
   if (
@@ -48,6 +57,16 @@ app.post("/login", async (req, res) => {
   }
 });
 
-app.listen(8080, () => {
-  console.log("Server listening  on localhost:8080");
+io.on("connection", (socket) => {
+  console.log("A user connected");
+  socket.on("message", (msg) => {
+    io.emit("message", msg);
+  });
+  socket.on("disconnect", () => {
+    console.log("A user disconnected");
+  });
+});
+
+server.listen(8080, () => {
+  console.log("Server listening on localhost:8080");
 });
