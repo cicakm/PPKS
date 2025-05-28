@@ -1,4 +1,4 @@
-import { createUser, getUserByUsername } from "./db.js";
+import { createUser, getUserByUsername, saveMessage } from "./db.js";
 import express from "express";
 import cors from "cors";
 import { createServer } from "http";
@@ -66,9 +66,10 @@ io.on("connection", (socket) => {
   socket.on("disconnect", () => {
     console.log("A user disconnected: ", socket.id);
   });
-  socket.on("private message", ({ message, from, to }) => {
+  socket.on("private message", async ({ message, from, to }) => {
     const id = users[to];
     if (id) {
+      await saveMessage(from, to, message);
       io.to(id).emit("private message", {
         message: message,
       });
