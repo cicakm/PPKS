@@ -16,6 +16,8 @@ const io = new Server(server, {
   },
 });
 
+const users = {};
+
 app.post("/register", async (req, res) => {
   if (
     req.body.name === "" ||
@@ -58,12 +60,19 @@ app.post("/login", async (req, res) => {
 });
 
 io.on("connection", (socket) => {
-  console.log("A user connected");
-  socket.on("message", (msg) => {
-    io.emit("message", msg);
+  socket.on("register", ({ username }) => {
+    users[username] = socket.id;
   });
   socket.on("disconnect", () => {
-    console.log("A user disconnected");
+    console.log("A user disconnected: ", socket.id);
+  });
+  socket.on("private message", ({ message, from, to }) => {
+    const id = users[to];
+    if (id) {
+      io.to(id).emit("private message", {
+        message: message,
+      });
+    }
   });
 });
 
