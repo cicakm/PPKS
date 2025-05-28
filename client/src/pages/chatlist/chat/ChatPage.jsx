@@ -1,18 +1,11 @@
 import { useState, useEffect } from "react";
-import {
-  Container,
-  Row,
-  Col,
-  Form,
-  Button,
-  InputGroup,
-} from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import { socket } from "../../../socket";
 import MessageListComponent from "../../../components/message-list/MessageListComponent";
+import MessageInputComponent from "../../../components/message-input/MessageInputComponent";
 
 const ChatPage = ({ currentUser, otherUser }) => {
   const [messages, setMessages] = useState([]);
-  const [input, setInput] = useState("");
 
   useEffect(() => {
     socket.connect();
@@ -28,9 +21,7 @@ const ChatPage = ({ currentUser, otherUser }) => {
     return () => socket.off("private message");
   });
 
-  const handleSend = (e) => {
-    e.preventDefault();
-    if (input.trim() === "") return;
+  const onSend = (input) => {
     setMessages([
       ...messages,
       { from: currentUser, to: otherUser, text: input },
@@ -40,7 +31,6 @@ const ChatPage = ({ currentUser, otherUser }) => {
       from: currentUser,
       to: otherUser,
     });
-    setInput("");
   };
 
   return (
@@ -68,19 +58,7 @@ const ChatPage = ({ currentUser, otherUser }) => {
           <MessageListComponent messages={messages} currentUser={currentUser} />
         </Col>
       </Row>
-      <Form onSubmit={handleSend}>
-        <InputGroup className="p-3">
-          <Form.Control
-            type="text"
-            placeholder="Type your message..."
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-          />
-          <Button type="submit" variant="primary">
-            Send
-          </Button>
-        </InputGroup>
-      </Form>
+      <MessageInputComponent onSend={onSend} />
     </Container>
   );
 };
