@@ -30,3 +30,15 @@ export async function getUserByUsername(username) {
     console.log(error);
   }
 }
+
+async function getUserIDByUsername(username) {
+  try {
+    const result = await pool.query(
+      "select id from myuser where username = $1",
+      [username]
+    );
+    return result.rows[0];
+  } catch (error) {
+    console.log(error);
+  }
+}
