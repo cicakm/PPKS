@@ -1,25 +1,18 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
   Container,
   Row,
   Col,
   Form,
   Button,
-  ListGroup,
   InputGroup,
 } from "react-bootstrap";
 import { socket } from "../../../socket";
-import MessageComponent from "../../../components/message/MessageComponent";
+import MessageListComponent from "../../../components/message-list/MessageListComponent";
 
 const ChatPage = ({ currentUser, otherUser }) => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
-  const messagesEndRef = useRef(null);
-
-  // Scroll
-  useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
 
   useEffect(() => {
     socket.connect();
@@ -72,12 +65,7 @@ const ChatPage = ({ currentUser, otherUser }) => {
       </Row>
       <Row style={{ height: 400, overflowY: "auto", background: "#f8f9fa" }}>
         <Col>
-          <ListGroup variant="flush" style={{ padding: "1rem 0" }}>
-            {messages.map((msg, idx) => (
-              <MessageComponent idx={idx} msg={msg} currentUser={currentUser} />
-            ))}
-            <div ref={messagesEndRef} />
-          </ListGroup>
+          <MessageListComponent messages={messages} currentUser={currentUser} />
         </Col>
       </Row>
       <Form onSubmit={handleSend}>
