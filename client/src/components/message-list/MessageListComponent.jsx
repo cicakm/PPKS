@@ -1,4 +1,4 @@
-import { ListGroup } from "react-bootstrap";
+import { Col, ListGroup, Row } from "react-bootstrap";
 import MessageComponent from "../message/MessageComponent";
 import { useEffect, useRef } from "react";
 
@@ -11,12 +11,16 @@ const MessageListComponent = ({ messages, currentUser }) => {
 
   return (
     <>
-      <ListGroup variant="flush" style={{ padding: "1rem 0" }}>
-        {messages.map((msg, idx) => (
-          <MessageComponent idx={idx} msg={msg} currentUser={currentUser} />
-        ))}
-        <div ref={messagesEndRef} />
-      </ListGroup>
+      <Row style={{ height: 400, overflowY: "auto", background: "#f8f9fa" }}>
+        <Col>
+          <ListGroup variant="flush" style={{ padding: "1rem 0" }}>
+            {messages.map((msg, idx) => (
+              <MessageComponent idx={idx} msg={msg} currentUser={currentUser} />
+            ))}
+            <div ref={messagesEndRef} />
+          </ListGroup>
+        </Col>
+      </Row>
     </>
   );
 };
