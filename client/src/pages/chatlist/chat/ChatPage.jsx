@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import { socket } from "../../../socket";
 import MessageListComponent from "../../../components/message-list/MessageListComponent";
 import MessageInputComponent from "../../../components/message-input/MessageInputComponent";
+import MessageTitleComponent from "../../../components/message-title/MessageTitleComponent";
 
 const ChatPage = ({ currentUser, otherUser }) => {
   const [messages, setMessages] = useState([]);
@@ -43,21 +44,8 @@ const ChatPage = ({ currentUser, otherUser }) => {
         padding: 0,
       }}
     >
-      <Row
-        className="bg-primary text-white p-3"
-        style={{ borderTopLeftRadius: 8, borderTopRightRadius: 8 }}
-      >
-        <Col>
-          <h5>
-            <span className="fw-bold">{otherUser}</span>
-          </h5>
-        </Col>
-      </Row>
-      <Row style={{ height: 400, overflowY: "auto", background: "#f8f9fa" }}>
-        <Col>
-          <MessageListComponent messages={messages} currentUser={currentUser} />
-        </Col>
-      </Row>
+      <MessageTitleComponent otherUser={otherUser} />
+      <MessageListComponent messages={messages} currentUser={currentUser} />
       <MessageInputComponent onSend={onSend} />
     </Container>
   );
