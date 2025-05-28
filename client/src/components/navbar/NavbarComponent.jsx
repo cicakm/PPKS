@@ -1,57 +1,64 @@
 import { useAuth } from "../../context/AuthContext";
 import { Navbar, Nav, Container, Button } from "react-bootstrap";
+import { useNavigate, Link } from "react-router-dom";
 
 const NavbarComponent = () => {
   const { username, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
 
   return (
     <>
       <Navbar bg="light" expand="lg" className="shadow-sm">
         <Container>
-          <Navbar.Brand href="/">ChatApp</Navbar.Brand>
-          <Navbar.Toggle aria-controls="main-navbar" />
-          <Navbar.Collapse id="main-navbar" className="justify-content-end">
+          <Navbar.Brand as={Link} to="/">
+            ChatApp
+          </Navbar.Brand>
+          <Navbar id="main-navbar" className="justify-content-end">
             {username ? (
-              <>
-                <Navbar.Brand>{localStorage.getItem("username")}</Navbar.Brand>
-                <Nav>
-                  <Button
-                    variant="outline-primary"
-                    className="rounded-pill fw-semibold px-4"
-                    href="/chat"
-                  >
-                    Chat
-                  </Button>
-                </Nav>
-                <Nav>
-                  <Button
-                    variant="outline-primary"
-                    className="rounded-pill fw-semibold px-4"
-                    onClick={logout}
-                  >
-                    Logout
-                  </Button>
-                </Nav>
-              </>
-            ) : (
               <Nav>
+                <Navbar.Brand>{localStorage.getItem("username")}</Navbar.Brand>
                 <Button
+                  as={Link}
+                  to="/chat"
                   variant="outline-primary"
-                  className="me-2 rounded-pill fw-semibold px-4"
-                  href="/login"
+                  className="rounded-pill fw-semibold px-4"
                 >
-                  Login
+                  Chat
                 </Button>
                 <Button
                   variant="outline-primary"
                   className="rounded-pill fw-semibold px-4"
-                  href="/register"
+                  onClick={handleLogout}
+                >
+                  Logout
+                </Button>
+              </Nav>
+            ) : (
+              <Nav>
+                <Button
+                  as={Link}
+                  to="/login"
+                  variant="outline-primary"
+                  className="me-2 rounded-pill fw-semibold px-4"
+                >
+                  Login
+                </Button>
+                <Button
+                  as={Link}
+                  to="/register"
+                  variant="outline-primary"
+                  className="rounded-pill fw-semibold px-4"
                 >
                   Register
                 </Button>
               </Nav>
             )}
-          </Navbar.Collapse>
+          </Navbar>
         </Container>
       </Navbar>
     </>
