@@ -42,3 +42,20 @@ async function getUserIDByUsername(username) {
     console.log(error);
   }
 }
+
+export async function saveMessage(from, to, message) {
+  try {
+    const fromID = getUserIDByUsername(from);
+    if (!fromID) return `User with username: ${from} does not exist!`;
+    const toID = getUserIDByUsername(to);
+    if (!toID) return `User with username: ${to} does not exist!`;
+
+    await pool.query(
+      "insert into message (fromID, toID, content) values ($1, $2, $3);",
+      [fromID, toID, message]
+    );
+    return;
+  } catch (error) {
+    console.log(error);
+  }
+}
