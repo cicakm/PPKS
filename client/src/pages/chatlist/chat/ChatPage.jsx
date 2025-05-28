@@ -9,6 +9,7 @@ import {
   InputGroup,
 } from "react-bootstrap";
 import { socket } from "../../../socket";
+import MessageComponent from "../../../components/message/MessageComponent";
 
 const ChatPage = ({ currentUser, otherUser }) => {
   const [messages, setMessages] = useState([]);
@@ -73,30 +74,7 @@ const ChatPage = ({ currentUser, otherUser }) => {
         <Col>
           <ListGroup variant="flush" style={{ padding: "1rem 0" }}>
             {messages.map((msg, idx) => (
-              <ListGroup.Item
-                key={idx}
-                className="border-0"
-                style={{
-                  display: "flex",
-                  justifyContent:
-                    msg.from === currentUser ? "flex-end" : "flex-start",
-                  background: "transparent",
-                }}
-              >
-                <div
-                  style={{
-                    maxWidth: "70%",
-                    background:
-                      msg.from === currentUser ? "#0d6efd" : "#e9ecef",
-                    color: msg.from === currentUser ? "white" : "black",
-                    borderRadius: 16,
-                    padding: "8px 16px",
-                    marginBottom: 4,
-                  }}
-                >
-                  <div>{msg.text}</div>
-                </div>
-              </ListGroup.Item>
+              <MessageComponent idx={idx} msg={msg} currentUser={currentUser} />
             ))}
             <div ref={messagesEndRef} />
           </ListGroup>
