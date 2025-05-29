@@ -1,4 +1,9 @@
-import { createUser, getUserByUsername, saveMessage } from "./db.js";
+import {
+  createUser,
+  getUserByUsername,
+  saveMessage,
+  getMessages,
+} from "./db.js";
 import express from "express";
 import cors from "cors";
 import { createServer } from "http";
@@ -57,6 +62,11 @@ app.post("/login", async (req, res) => {
   } else {
     res.status(400).send("Username or password incorrect");
   }
+});
+
+app.post("/messages", async (req, res) => {
+  const messages = await getMessages(req.body.from, req.body.to);
+  res.send(messages);
 });
 
 io.on("connection", (socket) => {
