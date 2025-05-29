@@ -6,7 +6,7 @@ import MessageInputComponent from "../../../components/message-input/MessageInpu
 import MessageTitleComponent from "../../../components/message-title/MessageTitleComponent";
 import axios from "axios";
 
-const ChatPage = ({ currentUser, otherUser }) => {
+const ChatPage = ({ currentUser, otherUser, onBack }) => {
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
@@ -30,7 +30,7 @@ const ChatPage = ({ currentUser, otherUser }) => {
       ]);
     });
     return () => socket.off("private message");
-  });
+  }, [currentUser, messages, otherUser]);
 
   const onSend = (input) => {
     setMessages([
@@ -54,7 +54,7 @@ const ChatPage = ({ currentUser, otherUser }) => {
         padding: 0,
       }}
     >
-      <MessageTitleComponent otherUser={otherUser} />
+      <MessageTitleComponent otherUser={otherUser} onBack={onBack} />
       <MessageListComponent messages={messages} currentUser={currentUser} />
       <MessageInputComponent onSend={onSend} />
     </Container>
