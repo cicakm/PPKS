@@ -3,6 +3,7 @@ import {
   getUserByUsername,
   saveMessage,
   getMessages,
+  getChats
 } from "./db.js";
 import express from "express";
 import cors from "cors";
@@ -68,6 +69,11 @@ app.post("/messages", async (req, res) => {
   const messages = await getMessages(req.body.from, req.body.to);
   res.send(messages);
 });
+
+app.post("/chats", async (req, res) => {
+  const chats = await getChats(req.body.from);
+  res.send(chats);
+})
 
 io.on("connection", (socket) => {
   socket.on("register", ({ username }) => {
