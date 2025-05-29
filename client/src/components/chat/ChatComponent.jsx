@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { Container } from "react-bootstrap";
-import { socket } from "../../../socket";
-import MessageListComponent from "../../../components/message-list/MessageListComponent";
-import MessageInputComponent from "../../../components/message-input/MessageInputComponent";
-import MessageTitleComponent from "../../../components/message-title/MessageTitleComponent";
+import { socket } from "../../socket";
+import MessageListComponent from "../message-list/MessageListComponent";
+import MessageInputComponent from "../message-input/MessageInputComponent";
+import MessageTitleComponent from "../message-title/MessageTitleComponent";
 import axios from "axios";
 
-const ChatPage = ({ currentUser, otherUser, onBack }) => {
+const ChatComponent = ({ currentUser, otherUser, onBack }) => {
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
@@ -61,4 +61,4 @@ const ChatPage = ({ currentUser, otherUser, onBack }) => {
   );
 };
 
-export default ChatPage;
+export default ChatComponent;

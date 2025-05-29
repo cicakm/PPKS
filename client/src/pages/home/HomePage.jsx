@@ -1,12 +1,12 @@
 import { Container, Row, Col, Card } from "react-bootstrap";
 import { useAuth } from "../../context/AuthContext";
-import ChatListPage from "../chatlist/ChatListPage";
+import ChatListComponent from "../../components/chatlist/ChatListComponent";
 
 const HomePage = () => {
   const { username } = useAuth();
 
   if (username) {
-    return <ChatListPage />;
+    return <ChatListComponent />;
   }
 
   return (

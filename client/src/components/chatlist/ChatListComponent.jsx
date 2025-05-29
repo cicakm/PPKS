@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import ChatPage from "./chat/ChatPage";
-import NewChatComponent from "../../components/new-chat/NewChatComponent";
+import ChatComponent from "../chat/ChatComponent";
+import NewChatComponent from "../new-chat/NewChatComponent"
 import { ListGroup, Container, Row, Col } from "react-bootstrap";
 import axios from "axios";
 import { ChatDots } from "react-bootstrap-icons";
 
-const ChatListPage = () => {
+const ChatListComponent = () => {
   const [chats, setChats] = useState({});
   const [selectedUser, setSelectedUser] = useState(null);
 
@@ -58,7 +58,7 @@ const ChatListPage = () => {
                 </ListGroup>
               </>
             ) : (
-              <ChatPage
+              <ChatComponent
                 currentUser={localStorage.getItem("username")}
                 otherUser={selectedUser}
                 onBack={() => {
@@ -74,4 +74,4 @@ const ChatListPage = () => {
   );
 };
 
-export default ChatListPage;
+export default ChatListComponent;
