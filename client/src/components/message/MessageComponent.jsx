@@ -1,6 +1,6 @@
 import { ListGroup } from "react-bootstrap";
 
-const MessageComponent = ({idx, msg, currentUser}) => {
+const MessageComponent = ({ idx, msg, currentUser }) => {
   return (
     <>
       <ListGroup.Item
@@ -22,7 +22,7 @@ const MessageComponent = ({idx, msg, currentUser}) => {
             marginBottom: 4,
           }}
         >
-          <div>{msg.text}</div>
+          <div>{msg.msg}</div>
         </div>
       </ListGroup.Item>
     </>
