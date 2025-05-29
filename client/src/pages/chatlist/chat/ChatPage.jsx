@@ -30,18 +30,18 @@ const ChatPage = ({ currentUser, otherUser, onBack }) => {
       ]);
     });
     return () => socket.off("private message");
-  }, [currentUser, messages, otherUser]);
+  });
 
   const onSend = (input) => {
-    setMessages([
-      ...messages,
-      { from: currentUser, to: otherUser, msg: input },
-    ]);
     socket.emit("private message", {
       message: input,
       from: currentUser,
       to: otherUser,
     });
+    setMessages([
+      ...messages,
+      { from: currentUser, to: otherUser, msg: input },
+    ]);
   };
 
   return (

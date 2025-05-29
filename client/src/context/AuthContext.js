@@ -1,4 +1,5 @@
 import { createContext, useState, useContext, useEffect } from "react";
+import { socket } from "../socket";
 
 const AuthContext = createContext();
 
@@ -25,6 +26,7 @@ export function AuthProvider({ children }) {
     setUsername("");
     localStorage.removeItem("name");
     localStorage.removeItem("username");
+    socket.disconnect();
   };
 
   return (
