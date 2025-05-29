@@ -12,56 +12,51 @@ const NavbarComponent = () => {
   };
 
   return (
-    <>
-      <Navbar bg="light" expand="lg" className="shadow-sm">
-        <Container>
-          <Navbar.Brand as={Link} to="/">
-            ChatApp
-          </Navbar.Brand>
-          <Navbar id="main-navbar" className="justify-content-end">
-            {username ? (
-              <Nav>
-                <Navbar.Brand>{localStorage.getItem("username")}</Navbar.Brand>
-                <Button
-                  as={Link}
-                  to="/chat"
-                  variant="outline-primary"
-                  className="rounded-pill fw-semibold px-4"
-                >
-                  Chat
-                </Button>
-                <Button
-                  variant="outline-primary"
-                  className="rounded-pill fw-semibold px-4"
-                  onClick={handleLogout}
-                >
-                  Logout
-                </Button>
-              </Nav>
-            ) : (
-              <Nav>
-                <Button
-                  as={Link}
-                  to="/login"
-                  variant="outline-primary"
-                  className="me-2 rounded-pill fw-semibold px-4"
-                >
-                  Login
-                </Button>
-                <Button
-                  as={Link}
-                  to="/register"
-                  variant="outline-primary"
-                  className="rounded-pill fw-semibold px-4"
-                >
-                  Register
-                </Button>
-              </Nav>
-            )}
-          </Navbar>
-        </Container>
-      </Navbar>
-    </>
+    <Navbar bg="light" expand="lg" className="shadow-sm">
+      <Container>
+        <Navbar.Brand as={Link} to="/" className="fst-italic fw-bold">
+          ChatApp
+        </Navbar.Brand>
+        <Navbar id="main-navbar" className="justify-content-end">
+          {username ? (
+            <Nav>
+              <Nav.Item className="fw-bold fst-italic px-3 py-1 text-primary">
+                {localStorage.getItem("username")}
+              </Nav.Item>
+              <Button
+                variant="outline-primary"
+                className="rounded-pill fw-semibold px-3 py-1"
+                onClick={handleLogout}
+                size="sm"
+              >
+                Logout
+              </Button>
+            </Nav>
+          ) : (
+            <Nav>
+              <Button
+                as={Link}
+                to="/login"
+                variant="outline-primary"
+                className="rounded-pill fw-semibold px-3 py-1"
+                size="sm"
+              >
+                Login
+              </Button>
+              <Button
+                as={Link}
+                to="/register"
+                variant="outline-primary"
+                className="rounded-pill fw-semibold px-3 py-1"
+                size="sm"
+              >
+                Register
+              </Button>
+            </Nav>
+          )}
+        </Navbar>
+      </Container>
+    </Navbar>
   );
 };
 
