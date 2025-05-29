@@ -68,8 +68,8 @@ io.on("connection", (socket) => {
   });
   socket.on("private message", async ({ message, from, to }) => {
     const id = users[to];
+    await saveMessage(from, to, message);
     if (id) {
-      await saveMessage(from, to, message);
       io.to(id).emit("private message", {
         message: message,
       });
