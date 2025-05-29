@@ -51,10 +51,22 @@ export async function saveMessage(from, to, message) {
     if (!toID) return `User with username: ${to} does not exist!`;
 
     await pool.query(
-      "insert into message (fromID, toID, content) values ($1, $2, $3);",
+      "insert into message (fromID, toID, msg) values ($1, $2, $3);",
       [fromID, toID, message]
     );
     return;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function getMessages(from, to) {
+  try {
+    const result = await pool.query(
+      'select m1.username as "from", m2.username as "to", msg.msg from message as msg join myuser as m1 on msg.fromid = m1.id join myuser as m2 on msg.toid = m2.id where m1.username = $1 and m2.username = $2 or m1.username = $2 and m2.username = $1',
+      [from, to]
+    );
+    return result.rows;
   } catch (error) {
     console.log(error);
   }
