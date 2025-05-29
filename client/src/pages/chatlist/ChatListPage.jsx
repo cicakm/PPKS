@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import ChatPage from "./chat/ChatPage";
+import NewChatComponent from "../../components/new-chat/NewChatComponent";
 import { ListGroup, Container, Row, Col } from "react-bootstrap";
 import axios from "axios";
 
 const ChatListPage = () => {
-
   const [chats, setChats] = useState({});
 
   const [selectedUser, setSelectedUser] = useState(null);
@@ -24,25 +24,27 @@ const ChatListPage = () => {
 
   return (
     <>
-      <Container style={{ maxWidth: 500}}>
+      <Container style={{ maxWidth: 500 }}>
         <Row>
           <Col>
             {!selected ? (
-              <ListGroup>
-                {Object.entries(chats).map((chat) => (
-                  <>
-                    <ListGroup.Item
-                      key={chat[0]}
-                      action
-                      active={selectedUser === chat[1].username}
-                      onClick={() => setSelectedUser(chat[1].username)}
-                      style={{ cursor: "pointer" }}
-                    >
-                      {chat[1].username}
-                    </ListGroup.Item>
-                  </>
-                ))}
-              </ListGroup>
+              <>
+                <NewChatComponent />
+                <ListGroup>
+                  {Object.entries(chats).map((chat) => (
+                    <>
+                      <ListGroup.Item
+                        variant="primary"
+                        key={chat[0]}
+                        onClick={() => setSelectedUser(chat[1].username)}
+                        style={{ cursor: "pointer" }}
+                      >
+                        {chat[1].username}
+                      </ListGroup.Item>
+                    </>
+                  ))}
+                </ListGroup>
+              </>
             ) : (
               <ChatPage
                 currentUser={localStorage.getItem("username")}
@@ -53,7 +55,7 @@ const ChatListPage = () => {
           </Col>
         </Row>
       </Container>
-</>
+    </>
   );
 };
 
