@@ -4,7 +4,6 @@ import NavbarComponent from "./components/navbar/NavbarComponent";
 import HomePage from "./pages/home/HomePage";
 import LoginPage from "./pages/login/LoginPage";
 import RegisterPage from "./pages/register/RegisterPage";
-import ChatListPage from "./pages/chatlist/ChatListPage";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 
@@ -18,7 +17,6 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
-            <Route path="/chat" element={<ChatListPage />} />
           </Routes>
         </Router>
       </AuthProvider>
