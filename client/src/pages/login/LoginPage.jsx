@@ -49,19 +49,19 @@ const LoginPage = () => {
   };
 
   return (
-    <Container>
+    <Container className="py-4">
       <Row className="justify-content-center">
-        <Col md={7} lg={5}>
+        <Col xs={12} sm={10} md={7} lg={4}>
           <Card className="shadow-sm border-0 rounded-4">
-            <Card.Body className="p-5">
-              <h2 className="mb-4 fw-bold text-center display-6">Login</h2>
+            <Card.Body className="p-4">
+              <h2 className="mb-3 fw-bold text-center fs-3">Login</h2>
               {loginFail && (
                 <Alert variant="danger" className="text-center">
                   {loginFail}
                 </Alert>
               )}
               <Form onSubmit={handleSubmit} noValidate>
-                <Form.Group className="mb-3" controlId="formUsername">
+                <Form.Group className="mb-2" controlId="formUsername">
                   <Form.Label>Username</Form.Label>
                   <Form.Control
                     type="text"
@@ -69,13 +69,13 @@ const LoginPage = () => {
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                     isInvalid={!!errors.username}
-                    size="lg"
+                    size="md"
                   />
                   <Form.Control.Feedback type="invalid">
                     {errors.username}
                   </Form.Control.Feedback>
                 </Form.Group>
-                <Form.Group className="mb-4" controlId="formPassword">
+                <Form.Group className="mb-3" controlId="formPassword">
                   <Form.Label>Password</Form.Label>
                   <Form.Control
                     type="password"
@@ -83,7 +83,7 @@ const LoginPage = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     isInvalid={!!errors.password}
-                    size="lg"
+                    size="md"
                   />
                   <Form.Control.Feedback type="invalid">
                     {errors.password}
@@ -92,7 +92,7 @@ const LoginPage = () => {
                 <Button
                   variant="primary"
                   type="submit"
-                  size="lg"
+                  size="md"
                   className="w-100 rounded-pill fw-semibold"
                 >
                   Login
