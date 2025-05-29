@@ -8,5 +8,6 @@ export const validateRegister = (req, res, next) => {
   if (req.body.password !== req.body.repeatPassword) {
     return res.status(400).json({ message: "Password mismatch" });
   }
+
   next();
 };
