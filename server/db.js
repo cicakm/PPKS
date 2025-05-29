@@ -63,8 +63,32 @@ export async function saveMessage(from, to, message) {
 export async function getMessages(from, to) {
   try {
     const result = await pool.query(
-      'select m1.username as "from", m2.username as "to", msg.msg from message as msg join myuser as m1 on msg.fromid = m1.id join myuser as m2 on msg.toid = m2.id where m1.username = $1 and m2.username = $2 or m1.username = $2 and m2.username = $1',
+      'select m1.username as "from", m2.username as "to", msg from message ' +
+        "join myuser as m1 on message.fromid = m1.id join myuser as m2 on message.toid = m2.id " +
+        "where m1.username = $1 and m2.username = $2 or m1.username = $2 and m2.username = $1",
       [from, to]
+    );
+    return result.rows;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function getChats(from) {
+  try {
+    const result = await pool.query(
+      "select distinct(m1.username) from message join myuser m1 on " +
+        "message.fromid = m1.id " +
+        "join myuser m2 on " +
+        "message.toid = m2.id " +
+        "where m2.username = $1 " +
+        "union " +
+        "select distinct(m1.username) from message join myuser m1 on " +
+        "message.toid = m1.id " +
+        "join myuser m2 on " +
+        "message.fromid = m2.id " +
+        "where m2.username = $1 ",
+      [from]
     );
     return result.rows;
   } catch (error) {
