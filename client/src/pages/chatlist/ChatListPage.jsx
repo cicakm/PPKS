@@ -3,11 +3,12 @@ import ChatPage from "./chat/ChatPage";
 import NewChatComponent from "../../components/new-chat/NewChatComponent";
 import { ListGroup, Container, Row, Col } from "react-bootstrap";
 import axios from "axios";
+import { ChatDots } from "react-bootstrap-icons";
 
 const ChatListPage = () => {
   const [chats, setChats] = useState({});
-
   const [selectedUser, setSelectedUser] = useState(null);
+
   const selected = Object.entries(chats).find(
     (chat) => chat[1].username === selectedUser
   );
@@ -24,25 +25,32 @@ const ChatListPage = () => {
 
   return (
     <>
-      <Container style={{ maxWidth: 500 }}>
-        <Row>
-          <Col>
+      <Container className="py-3">
+        <Row className="justify-content-center">
+          <Col xs={12} sm={10} md={8} lg={5}>
             {!selected ? (
               <>
-                <NewChatComponent />
+                <div className="mb-3">
+                  <NewChatComponent />
+                </div>
                 <ListGroup>
-                  {Object.entries(chats).map((chat) => (
-                    <>
-                      <ListGroup.Item
-                        variant="primary"
-                        key={chat[0]}
-                        onClick={() => setSelectedUser(chat[1].username)}
-                        style={{ cursor: "pointer" }}
-                      >
-                        {chat[1].username}
-                      </ListGroup.Item>
-                    </>
+                  {Object.entries(chats).map(([id, chat]) => (
+                    <ListGroup.Item
+                      variant="primary"
+                      key={id}
+                      onClick={() => setSelectedUser(chat.username)}
+                      style={{ cursor: "pointer" }}
+                      className="fw-semibold py-3 mb-2 rounded-3 d-flex align-items-center gap-3"
+                    >
+                      <ChatDots size={24} />
+                      {chat.username}
+                    </ListGroup.Item>
                   ))}
+                  {Object.keys(chats).length === 0 && (
+                    <ListGroup.Item className="text-center text-muted py-4">
+                      No chats yet. Start a new conversation!
+                    </ListGroup.Item>
+                  )}
                 </ListGroup>
               </>
             ) : (
