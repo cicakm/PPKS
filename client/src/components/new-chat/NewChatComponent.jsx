@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Form, Button, Container, Row, Col, InputGroup } from "react-bootstrap";
 import ChatPage from "../../pages/chatlist/chat/ChatPage";
+import { ChatDots } from "react-bootstrap-icons";
 
 const NewChatComponent = () => {
   const [username, setUsername] = useState("");
@@ -13,7 +14,6 @@ const NewChatComponent = () => {
     }
   };
 
-  // Replace this with your actual ChatPage component if you have one
   if (chatUser) {
     return (
       <ChatPage
@@ -24,20 +24,28 @@ const NewChatComponent = () => {
   }
 
   return (
-    <Container style={{ maxWidth: 400, marginTop: 60, marginBottom: 20 }}>
+    <Container
+      className="px-0"
+      style={{ maxWidth: 350, marginTop: 24, marginBottom: 12 }}
+    >
       <Row>
         <Col>
           <Form onSubmit={handleSubmit}>
-            <InputGroup>
+            <InputGroup size="sm">
               <Form.Control
                 id="username"
                 type="text"
-                placeholder="Chat with:"
+                placeholder="Start chat with:"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
               />
-              <Button variant="primary" type="submit">
-                Start Chat
+              <Button
+                variant="primary"
+                type="submit"
+                size="sm"
+                className="rounded-end-pill px-3"
+              >
+                <ChatDots size={20} className="mb-1" />
               </Button>
             </InputGroup>
           </Form>
