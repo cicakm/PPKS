@@ -1,27 +1,16 @@
 import { useState } from "react";
 import { Form, Button, Container, Row, Col, InputGroup } from "react-bootstrap";
-import ChatPage from "../../pages/chatlist/chat/ChatPage";
 import { ChatDots } from "react-bootstrap-icons";
 
-const NewChatComponent = () => {
+const NewChatComponent = ({ onInput }) => {
   const [username, setUsername] = useState("");
-  const [chatUser, setChatUser] = useState(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (username.trim() !== "") {
-      setChatUser(username.trim());
+      onInput(username);
     }
   };
-
-  if (chatUser) {
-    return (
-      <ChatPage
-        otherUser={chatUser}
-        currentUser={localStorage.getItem("username")}
-      />
-    );
-  }
 
   return (
     <Container

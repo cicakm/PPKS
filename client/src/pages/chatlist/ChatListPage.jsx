@@ -9,11 +9,11 @@ const ChatListPage = () => {
   const [chats, setChats] = useState({});
   const [selectedUser, setSelectedUser] = useState(null);
 
-  const selected = Object.entries(chats).find(
-    (chat) => chat[1].username === selectedUser
-  );
+  const handleInput = (data) => {
+    setSelectedUser(data);
+  };
 
-  useEffect(() => {
+  const fetchChats = () => {
     axios
       .post("http://localhost:8080/chats", {
         from: localStorage.getItem("username"),
@@ -21,6 +21,10 @@ const ChatListPage = () => {
       .then((res) => {
         setChats(res.data);
       });
+  };
+
+  useEffect(() => {
+    fetchChats();
   }, []);
 
   return (
@@ -28,10 +32,10 @@ const ChatListPage = () => {
       <Container className="py-3">
         <Row className="justify-content-center">
           <Col xs={12} sm={10} md={8} lg={5}>
-            {!selected ? (
+            {!selectedUser ? (
               <>
                 <div className="mb-3">
-                  <NewChatComponent />
+                  <NewChatComponent onInput={handleInput} />
                 </div>
                 <ListGroup>
                   {Object.entries(chats).map(([id, chat]) => (
@@ -57,7 +61,10 @@ const ChatListPage = () => {
               <ChatPage
                 currentUser={localStorage.getItem("username")}
                 otherUser={selectedUser}
-                onBack={() => setSelectedUser(null)}
+                onBack={() => {
+                  setSelectedUser(null);
+                  fetchChats();
+                }}
               />
             )}
           </Col>
