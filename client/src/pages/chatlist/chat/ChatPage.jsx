@@ -4,9 +4,19 @@ import { socket } from "../../../socket";
 import MessageListComponent from "../../../components/message-list/MessageListComponent";
 import MessageInputComponent from "../../../components/message-input/MessageInputComponent";
 import MessageTitleComponent from "../../../components/message-title/MessageTitleComponent";
+import axios from "axios";
 
 const ChatPage = ({ currentUser, otherUser }) => {
   const [messages, setMessages] = useState([]);
+
+  useEffect(() => {
+    axios
+      .post("http://localhost:8080/messages", {
+        from: currentUser,
+        to: otherUser,
+      })
+      .then((res) => setMessages(res.data));
+  }, [currentUser, otherUser]);
 
   useEffect(() => {
     socket.connect();
@@ -16,7 +26,7 @@ const ChatPage = ({ currentUser, otherUser }) => {
     socket.on("private message", ({ message }) => {
       setMessages([
         ...messages,
-        { from: otherUser, to: currentUser, text: message },
+        { from: otherUser, to: currentUser, msg: message },
       ]);
     });
     return () => socket.off("private message");
@@ -25,7 +35,7 @@ const ChatPage = ({ currentUser, otherUser }) => {
   const onSend = (input) => {
     setMessages([
       ...messages,
-      { from: currentUser, to: otherUser, text: input },
+      { from: currentUser, to: otherUser, msg: input },
     ]);
     socket.emit("private message", {
       message: input,
