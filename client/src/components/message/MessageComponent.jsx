@@ -5,24 +5,26 @@ const MessageComponent = ({ idx, msg, currentUser }) => {
     <>
       <ListGroup.Item
         key={idx}
-        className="border-0"
+        className="border-0 bg-transparent px-2 py-1"
         style={{
           display: "flex",
           justifyContent: msg.from === currentUser ? "flex-end" : "flex-start",
-          background: "transparent",
         }}
       >
         <div
+          className={
+            "d-inline-block p-2 px-3 mb-1 rounded-4 shadow-sm " +
+            (msg.from === currentUser
+              ? "bg-primary text-white align-self-end"
+              : "bg-light text-dark align-self-start")
+          }
           style={{
-            maxWidth: "70%",
-            background: msg.from === currentUser ? "#0d6efd" : "#e9ecef",
-            color: msg.from === currentUser ? "white" : "black",
-            borderRadius: 16,
-            padding: "8px 16px",
-            marginBottom: 4,
+            maxWidth: "80vw",
+            wordBreak: "break-word",
+            fontSize: "1rem",
           }}
         >
-          <div>{msg.msg}</div>
+          {msg.msg}
         </div>
       </ListGroup.Item>
     </>
