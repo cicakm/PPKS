@@ -79,9 +79,6 @@ io.on("connection", (socket) => {
   socket.on("register", ({ username }) => {
     users[username] = socket.id;
   });
-  socket.on("disconnect", () => {
-    console.log("A user disconnected: ", socket.id);
-  });
   socket.on("private message", async ({ message, from, to }) => {
     const id = users[to];
     await saveMessage(from, to, message);
