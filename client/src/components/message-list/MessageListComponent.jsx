@@ -11,11 +11,25 @@ const MessageListComponent = ({ messages, currentUser }) => {
 
   return (
     <>
-      <Row style={{ height: 400, overflowY: "auto", background: "#f8f9fa" }}>
-        <Col>
-          <ListGroup variant="flush" style={{ padding: "1rem 0" }}>
+      <Row
+        className="flex-grow-1"
+        style={{
+          minHeight: 0,
+          maxHeight: 400,
+          overflowY: "auto",
+          background: "#f8f9fa",
+          borderRadius: "0 0 16px 16px",
+        }}
+      >
+        <Col className="px-0">
+          <ListGroup variant="flush" className="py-3 px-2">
             {messages.map((msg, idx) => (
-              <MessageComponent idx={idx} msg={msg} currentUser={currentUser} />
+              <MessageComponent
+                key={idx}
+                idx={idx}
+                msg={msg}
+                currentUser={currentUser}
+              />
             ))}
             <div ref={messagesEndRef} />
           </ListGroup>
